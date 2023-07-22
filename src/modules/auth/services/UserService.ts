@@ -1,8 +1,8 @@
 import createError from "http-errors";
 import { AppDataSource } from "../../../data-source";
-import User from "../models/User";
+import { User } from "../models/User";
 
-class UserService {
+export default class UserService {
 	private userRepository = AppDataSource.getRepository(User);
 
 	async getAllUsers(): Promise<User[]> {
@@ -15,5 +15,3 @@ class UserService {
 		}
 	}
 }
-
-export default new UserService();
