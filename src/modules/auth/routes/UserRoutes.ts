@@ -1,4 +1,4 @@
-import * as express from "express";
+import express from "express";
 import UserController from "../controllers/UserController";
 
 export default class UserRoutes {
@@ -14,6 +14,10 @@ export default class UserRoutes {
 
 	private registerRoutes() {
 		this.router.get("/", this.userController.getAll);
+		this.router.get("/:id", this.userController.getOne);
+		this.router.post("/", this.userController.add);
+		this.router.put("/:id", this.userController.update);
+		this.router.delete("/:id", this.userController.remove);
 	}
 
 	public getRouter(): express.Router {
