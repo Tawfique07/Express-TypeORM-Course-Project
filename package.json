@@ -1,5 +1,5 @@
 {
-  "name": "TestProject",
+  "name": "testproject",
   "version": "0.0.1",
   "description": "Awesome project developed with TypeORM.",
   "type": "commonjs",
@@ -21,5 +21,16 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "typeorm": "typeorm-ts-node-commonjs"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tawfique07/Express-TypeORM-Course-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tawfique07/Express-TypeORM-Course-Project/issues"
+  },
+  "homepage": "https://github.com/Tawfique07/Express-TypeORM-Course-Project#readme"
 }
