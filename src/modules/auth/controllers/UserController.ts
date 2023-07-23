@@ -17,7 +17,11 @@ export default class UserController {
 		try {
 			const user = await userService.getUser(req.params.id);
 			res.status(200).json({
-				user,
+				user: {
+					id: user.id,
+					email: user.email,
+					role: user.role,
+				},
 			});
 		} catch (error) {
 			next(error);
@@ -29,7 +33,13 @@ export default class UserController {
 
 		try {
 			const user = await userService.registerUser(email, password);
-			res.status(200).json(user);
+			res.status(200).json({
+				message: "User successfully registered",
+				user: {
+					id: user.id,
+					email: user.email,
+				},
+			});
 		} catch (error) {
 			next(error);
 		}
@@ -38,9 +48,13 @@ export default class UserController {
 	async remove(req: Request, res: Response, next: NextFunction) {
 		const { id: userID } = req.params;
 		try {
-			const result = userService.removeUser(userID);
+			const result = await userService.removeUser(userID);
 			res.status(200).json({
 				message: "User Removed Successfully",
+				user: {
+					id: result.id,
+					email: result.email,
+				},
 			});
 		} catch (error) {
 			next(error);
@@ -48,13 +62,26 @@ export default class UserController {
 	}
 
 	async update(req: Request, res: Response, next: NextFunction) {
-		const { password } = req.body;
+		const { password, old_password } = req.body;
 
 		try {
-			const user = userService.updateUser(req.params.id, password);
+			let user = await userService.getUser(req.params.id);
+			if (user.password !== old_password) {
+				res.status(406).json({
+					error: {
+						msg: "Invalid password",
+					},
+				});
+				return;
+			}
+			user = await userService.updateUser(req.params.id, password);
 			res.status(200).json({
 				message: "User updated successfully",
-				user,
+				user: {
+					id: user.id,
+					email: user.email,
+					role: user.role,
+				},
 			});
 		} catch (error) {
 			next(error);
