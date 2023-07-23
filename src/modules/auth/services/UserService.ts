@@ -26,11 +26,6 @@ export class UserService {
 				where: {
 					id: userId,
 				},
-				select: {
-					id: true,
-					email: true,
-					role: true,
-				},
 			});
 
 			if (user) {
@@ -63,8 +58,11 @@ export class UserService {
 	async removeUser(id: string) {
 		try {
 			const user = await this.userRepository.findOneBy({ id });
-			const result = await this.userRepository.remove(user);
-			return result;
+			if (user) {
+				const result = await this.userRepository.remove(user);
+				return result;
+			}
+			throw createError(406, "User does not exist");
 		} catch (error) {
 			throw createError(error.status || 500, error.message || "Internal server error");
 		}

@@ -7,6 +7,10 @@ export default class ErrorHandler {
 	}
 
 	defaultErrorHandler(err: HttpError, req: Request, res: Response, next: NextFunction) {
-		res.status(err.status || 500).json(err);
+		res.status(err.status || 500).json({
+			error: {
+				msg: err.message,
+			},
+		});
 	}
 }
