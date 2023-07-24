@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import courseService from "../services/CourseService";
 
 export default class CourseController {
-	async getAllCourses(req: Request, res: Response, next: NextFunction) {
+	async getAllCourses(req: any, res: Response, next: NextFunction) {
 		try {
 			const courses = await courseService.getAllCourses();
 			res.status(200).json(courses);
