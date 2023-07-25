@@ -23,4 +23,9 @@ export class User {
 		default: UserRole.CLIENT,
 	})
 	role: UserRole;
+
+	@Column({
+		default: "abcdexg",
+	})
+	pass_token: string;
 }
