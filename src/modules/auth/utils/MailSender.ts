@@ -6,10 +6,11 @@ export class MailSender {
 	private mailGenerator: Mailgen;
 	constructor() {
 		this.transporter = nodemailer.createTransport({
-			service: "gmail",
+			host: process.env.MAIL_HOST,
+			port: Number(process.env.MAIL_PORT),
 			auth: {
-				user: process.env.GMAIL_USER,
-				pass: process.env.GMAIL_PASS,
+				user: process.env.MAIL_USER,
+				pass: process.env.MAIL_PASS,
 			},
 		});
 
@@ -35,7 +36,7 @@ export class MailSender {
 		const mail = this.mailGenerator.generate(email);
 
 		const message = {
-			from: process.env.GMAIL_USER,
+			from: "example@courseapp.com",
 			to: receiverEmail,
 			subject: "Reset Password",
 			html: mail,
