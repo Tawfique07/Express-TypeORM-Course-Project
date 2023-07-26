@@ -1,3 +1,4 @@
+import cors from "cors";
 import dotenv from "dotenv";
 import express, { Application } from "express";
 import passport from "passport";
@@ -15,11 +16,12 @@ class Server {
 		this.app = express();
 		this.routes = new Routes();
 		this.auth = new Auth();
-		this.PORT = Number(process.env.SERVER_PORT);
+		this.PORT = Number(process.env.SERVER_PORT || 3000);
 		this.config();
 	}
 
 	private config() {
+		this.app.use(cors());
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }));
 		this.app.set("port", this.PORT);
