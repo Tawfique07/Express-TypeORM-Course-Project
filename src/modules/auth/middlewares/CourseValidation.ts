@@ -4,6 +4,7 @@ import { check, validationResult } from "express-validator";
 class CourseValidation {
 	validators = [
 		check("courseName")
+			.optional()
 			.isLength({ min: 1 })
 			.withMessage("Course name is required")
 			.isLength({ max: 50 })
@@ -12,6 +13,7 @@ class CourseValidation {
 			.withMessage("Course name must not contain anything other than alphabet")
 			.trim(),
 		check("courseId")
+			.optional()
 			.trim()
 			.isLength({ min: 1 })
 			.withMessage("Course Id is required.")
@@ -24,7 +26,7 @@ class CourseValidation {
 		const errors = validationResult(req);
 		const mappedErrors = errors.mapped();
 		if (Object.keys(mappedErrors).length === 0) {
-			req.body.courseId.next();
+			next();
 		} else {
 			// response the errors
 			res.status(500).json({
