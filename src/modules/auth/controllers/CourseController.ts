@@ -5,7 +5,9 @@ export default class CourseController {
 	async getAllCourses(req: any, res: Response, next: NextFunction) {
 		try {
 			const courses = await courseService.getAllCourses();
-			res.status(200).json(courses);
+			res.status(200).json({
+				courses,
+			});
 		} catch (error) {
 			next(error);
 		}
