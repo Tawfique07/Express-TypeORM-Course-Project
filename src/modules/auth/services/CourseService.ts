@@ -45,11 +45,9 @@ class CourseService {
 	async updateCourse(courseId: string, courseName: string) {
 		try {
 			let course = await this.courseRepository.findOneBy({ courseId });
-
 			if (course) {
 				course.courseName = courseName;
-				await this.courseRepository.save(course);
-
+				course = await this.courseRepository.save(course);
 				return course;
 			}
 			throw createError(406, "Course does not Exist");

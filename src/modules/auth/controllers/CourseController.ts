@@ -39,10 +39,18 @@ export default class CourseController {
 
 	async update(req: Request, res: Response, next: NextFunction) {
 		try {
-			const course = courseService.updateCourse(req.params.courseId, req.body.courseName);
-			res.status(200).json({
-				message: "Course updated successfully",
-				course,
+			const course = await courseService.updateCourse(req.params.courseId, req.body.courseName);
+			if (course) {
+				res.status(200).json({
+					message: "Course updated successfully",
+					course,
+				});
+				return;
+			}
+			res.status(404).json({
+				error: {
+					msg: `Course not Found with courseId ${req.params.courseId}`,
+				},
 			});
 		} catch (error) {
 			next(error);
